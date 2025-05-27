@@ -54,8 +54,9 @@ export function timestampGenerator(
   else if (time > duration) time = duration;
 
   const timeInDuration = formatDuration(time);
-  const frag =
-    time > 0 ? ({ start: time, end: -1 } satisfies TempFragment) : undefined;
+  let frag
+  if (time > 0)
+    frag = { start: parseFloat(time.toFixed(2)), end: -1 } satisfies TempFragment
   const hash = frag ? `#${toTempFragString(frag)!}` : "";
 
   if (isFileMediaInfo(mediaInfo)) {
