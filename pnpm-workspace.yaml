@@ -1,0 +1,6 @@
+packages:
+  - app
+  - tooling-config
+
+onlyBuiltDependencies:
+  - "@codemirror/language"
