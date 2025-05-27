@@ -232,14 +232,16 @@ export class LeafOpener extends Component {
         source,
       };
       viewType ??= this.plugin.urlViewType.getPreferred(mediaInfo);
-      await leaf.setViewState(
-        {
-          type: viewType,
-          state,
-          active: true,
-        },
-        { subpath: hash },
-      );
+      setTimeout(async ()=> {
+        await leaf.setViewState(
+          {
+            type: viewType,
+            state,
+            active: true,
+          },
+          { subpath: hash },
+        );
+      }, 100)
     }
     return leaf as MediaLeaf;
   }
