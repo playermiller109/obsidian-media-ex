@@ -99,7 +99,7 @@ export class WebviewPreload extends Component {
     );
     const preloadScriptPath = path.join(
       userDataDir,
-      `mx-preload.${Date.now()}.js`,
+      `mx-preload.${this.app.vault.getName()}.js`,
     );
 
     (async () => {
