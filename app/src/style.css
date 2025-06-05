@@ -1,6 +1,15 @@
 @tailwind components;
 @tailwind utilities;
 
+/*播放器控件遮罩*/
+[data-controls] > .inset-0.z-0::before {
+  content: '';
+  position: absolute;
+  height: 70px;
+  right: 0; bottom: 0; left: 0;
+  background: linear-gradient(to bottom, transparent 0%, #22222290 100%);
+}
+
 svg.svg-icon {
   width: 100%;
   height: 100%;
