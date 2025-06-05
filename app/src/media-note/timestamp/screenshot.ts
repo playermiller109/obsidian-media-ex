@@ -86,7 +86,12 @@ export async function saveScreenshot<T extends PlayerComponent>(
   }
 
   const title = mediaTitle(media, { state });
-  const screenshotName = normalizeFilename(title) + toDurationISOString(time);
+  /**
+   * @param media fetch 到的内容
+   */
+  const [idx, bv] = media.id.split('@')
+  const middleName = (media.search) ? `_${idx}_` : '_'
+  const screenshotName = bv + middleName + toDurationISOString(time);
   const humanizedDuration = time > 0 ? ` - ${formatDuration(time)}` : "";
 
   const folder = await getSaveFolder(screenshotFolderPath, {
