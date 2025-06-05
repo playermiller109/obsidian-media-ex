@@ -81,44 +81,44 @@ export function registerNoteCommands(plugin: MxPlugin) {
     },
     plugin,
   );
-  addMediaViewCommand(
-    {
-      id: "take-timestamp-media-note",
-      name: "Take timestamp in media note",
-      icon: "star",
-      menu: true,
-      section: "selection-link",
-      playerCheckCallback(checking, view) {
-        const mediaInfo = view.getMediaInfo();
-        if (!mediaInfo) return false;
-        if (checking) return true;
-        plugin.mediaNote
-          .getNote(mediaInfo, view.player)
-          .then((note) => plugin.leafOpener.openNote(note))
-          .then((ctx) => takeTimestamp(view, ctx));
-      },
-    },
-    plugin,
-  );
-  addMediaViewCommand(
-    {
-      id: "save-screenshot-media-note",
-      name: "Save screenshot in media note",
-      icon: "camera",
-      section: "selection-link",
-      menu: true,
-      playerCheckCallback(checking, view) {
-        const mediaInfo = view.getMediaInfo();
-        if (!mediaInfo) return false;
-        if (checking) return true;
-        plugin.mediaNote
-          .getNote(mediaInfo, view.player)
-          .then((note) => plugin.leafOpener.openNote(note))
-          .then((ctx) => saveScreenshot(view, ctx));
-      },
-    },
-    plugin,
-  );
+  // addMediaViewCommand(
+  //   {
+  //     id: "take-timestamp-media-note",
+  //     name: "Take timestamp in media note",
+  //     icon: "star",
+  //     menu: true,
+  //     section: "selection-link",
+  //     playerCheckCallback(checking, view) {
+  //       const mediaInfo = view.getMediaInfo();
+  //       if (!mediaInfo) return false;
+  //       if (checking) return true;
+  //       plugin.mediaNote
+  //         .getNote(mediaInfo, view.player)
+  //         .then((note) => plugin.leafOpener.openNote(note))
+  //         .then((ctx) => takeTimestamp(view, ctx));
+  //     },
+  //   },
+  //   plugin,
+  // );
+  // addMediaViewCommand(
+  //   {
+  //     id: "save-screenshot-media-note",
+  //     name: "Save screenshot in media note",
+  //     icon: "camera",
+  //     section: "selection-link",
+  //     menu: true,
+  //     playerCheckCallback(checking, view) {
+  //       const mediaInfo = view.getMediaInfo();
+  //       if (!mediaInfo) return false;
+  //       if (checking) return true;
+  //       plugin.mediaNote
+  //         .getNote(mediaInfo, view.player)
+  //         .then((note) => plugin.leafOpener.openNote(note))
+  //         .then((ctx) => saveScreenshot(view, ctx));
+  //     },
+  //   },
+  //   plugin,
+  // );
 
   function basicLogic(
     action: (

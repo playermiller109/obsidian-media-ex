@@ -45,25 +45,26 @@ export function titleFromUrl(src: string): string {
 
 export function addAction(player: PlayerComponent & ItemView) {
   const { plugin } = player;
-  player.addAction("star", "Take timestamp in media note", () => {
-    const info = player.getMediaInfo();
-    if (!info) return;
-    noticeNotetaking("timestamp");
-    plugin.mediaNote
-      .getNote(info, player.player)
-      .then((note) => plugin.leafOpener.openNote(note))
-      .then((ctx) => takeTimestamp(player, ctx));
-  });
+  // player.addAction("star", "Take timestamp in media note", () => {
+  //   const info = player.getMediaInfo();
+  //   if (!info) return;
+  //   noticeNotetaking("timestamp");
+  //   plugin.mediaNote
+  //     .getNote(info, player.player)
+  //     .then((note) => plugin.leafOpener.openNote(note))
+  //     .then((ctx) => takeTimestamp(player, ctx));
+  // });
   const viewType = player.getViewType();
   if (screenshotAllowed.has(viewType))
-    player.addAction("camera", "Take screenshot in media", () => {
+    player.addAction("camera", "Take screenshot in media", async () => {
       const info = player.getMediaInfo();
       if (!info) return;
-      noticeNotetaking("screenshot");
-      plugin.mediaNote
-        .getNote(info, player.player)
-        .then((note) => plugin.leafOpener.openNote(note))
-        .then((ctx) => saveScreenshot(player, ctx));
+      await plugin.app.commands.executeCommandById('media-ex:save-screenshot')
+      // noticeNotetaking("screenshot");
+      // plugin.mediaNote
+      //   .getNote(info, player.player)
+      //   .then((note) => plugin.leafOpener.openNote(note))
+      //   .then((ctx) => saveScreenshot(player, ctx));
     });
 }
 
