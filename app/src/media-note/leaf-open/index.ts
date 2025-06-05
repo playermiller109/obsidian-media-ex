@@ -206,7 +206,9 @@ export class LeafOpener extends Component {
 
     let leaf;
     if (newLeaf === "split-horizontal") {
-      leaf = workspace.getLeaf("split", direction ?? "horizontal");
+      const closestParent = workspace.getMostRecentLeaf().parent.parent.children[0]
+      const leftestLeaf = workspace.getLeafById(closestParent.children[0].id)
+      leaf = workspace.createLeafBySplit(leftestLeaf, 'vertical', !0)
     } else {
       leaf = workspace.getLeaf(newLeaf as "split", direction);
     }
