@@ -246,7 +246,7 @@ export class MediaSwitcherModal extends SuggestModal<MediaInfo> {
     } else if (Keymap.isModifier(evt, "Mod")) {
       this.plugin.leafOpener.openMedia(mediaInfo, "tab");
     } else {
-      this.plugin.leafOpener.openMedia(mediaInfo, false);
+      this.plugin.leafOpener.openMedia(mediaInfo, "split-horizontal");
     }
   }
 }
