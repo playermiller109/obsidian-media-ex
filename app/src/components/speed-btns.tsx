@@ -2,10 +2,11 @@ import type MxPlugin from "@/mx-main";
 
 export function SpeedBtns({plugin}: {plugin: MxPlugin}) {
   const speedOptions = plugin.settings.getState().speedOptions
+  const reordered = [...speedOptions.slice(6).reverse(), ...speedOptions.slice(0, 6)]
   return (
     <div>
       <div className="mx-speed-btns">
-        {speedOptions.map((speed) => (
+        {reordered.map((speed) => (
           <button
             className="keep-ob"
             key={speed}
