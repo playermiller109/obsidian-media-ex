@@ -330,6 +330,45 @@ export class MxSettingTabs extends PluginSettingTab {
             this.state.setLoadStrategy(val as "play" | "eager"),
           ),
       );
+    new Setting(container)
+      .setName("Playback Speeds")
+      .setDesc("Customize the available playback speed options (comma-separated numbers)")
+      .addText((text) => text
+        .setValue(this.state.speedOptions.join(","))
+        .onChange(this.state.setSpeedOptions)
+      );
+    new Setting(container)
+      .setName("Speed step")
+      .setDesc(
+        "Configure the step for command to slightly increasing or decreasing playback speed",
+      )
+      .addSlider((slide) =>
+        slide
+          .setLimits(0.01, 2, 0.01)
+          .setValue(this.state.speedStep)
+          .onChange(this.state.setSpeedStep)
+          .then((slide) => {
+            this.sub((s, prev) => {
+              if (s.speedStep === prev.speedStep) return;
+              slide.setValue(s.speedStep);
+            });
+          }),
+        )
+      .addText((text) =>
+        text
+          .setValue(toStr(this.state.speedStep))
+          .onChange(handleFloat(this.state.setSpeedStep))
+          .then((input) => {
+            setLimits.call(input, 0.01, 2, 0.01);
+            input.inputEl.type = "number";
+            input.inputEl.style.textAlign = "center";
+            this.sub((s, prev) => {
+              if (s.speedStep === prev.speedStep) return;
+              input.setValue(toStr(s.speedStep));
+            });
+          }),
+      )
+      .then((s) => s.controlEl.appendText("x"));
   }
 
   subtitle() {
@@ -362,39 +401,6 @@ export class MxSettingTabs extends PluginSettingTab {
             this.state.setDefaultLanguage(val === fallback ? null : val),
           ),
       );
-    new Setting(container)
-      .setName("Speed step")
-      .setDesc(
-        "Configure the step for command to slightly increasing or decreasing playback speed",
-      )
-      .addSlider((slide) =>
-        slide
-          .setLimits(0.01, 2, 0.01)
-          .setValue(this.state.speedStep)
-          .onChange(this.state.setSpeedStep)
-          .then((slide) => {
-            this.sub((s, prev) => {
-              if (s.speedStep === prev.speedStep) return;
-              slide.setValue(s.speedStep);
-            });
-          }),
-      )
-      .addText((text) =>
-        text
-          .setValue(toStr(this.state.speedStep))
-          .onChange(handleFloat(this.state.setSpeedStep))
-          .then((input) => {
-            setLimits.call(input, 0.01, 2, 0.01);
-            input.inputEl.type = "number";
-            input.inputEl.style.textAlign = "center";
-            this.sub((s, prev) => {
-              if (s.speedStep === prev.speedStep) return;
-              input.setValue(toStr(s.speedStep));
-            });
-          }),
-      )
-      .then((s) => s.controlEl.appendText("x"));
-
     new Setting(container)
       .setName("Default location for downloaded subtitle")
       .setDesc("Where subtitles from website are placed.")

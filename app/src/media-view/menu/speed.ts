@@ -1,10 +1,10 @@
 import type { MediaPlayerInstance } from "@vidstack/react";
 import type { MenuItem } from "obsidian";
+import type MxPlugin from "@/mx-main";
 import { PlaybackSpeedPrompt } from "./prompt";
 
-export const speedOptions = [0.25, 0.5, 0.75, 1, 1.25, 1.5, 2, 3, 5, 10];
-
-export function speedMenu(item: MenuItem, player: MediaPlayerInstance) {
+export function speedMenu(plugin: MxPlugin, item: MenuItem, player: MediaPlayerInstance) {
+  const speedOptions = plugin.settings.getState().speedOptions
   const currentSpeed = player.state.playbackRate;
 
   const isCustomSpeed = !speedOptions.includes(currentSpeed);
