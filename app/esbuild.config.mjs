@@ -1,3 +1,5 @@
+const directory = 'D:/Obv/Ember/.obsidian/plugins/media-ex'
+
 /* eslint-disable no-inner-declarations */
 import obPlugin from "./scripts/ob.esbuild.mjs";
 import { build, context } from "esbuild";
@@ -78,7 +80,7 @@ const opts = {
   },
   entryPoints: ["src/mx-main.ts"],
   banner: { js: banner },
-  outfile: "dist/main.js",
+  outfile: directory+"/main.js",
   tsconfig: "tsconfig.json",
   plugins: [
     stylePlugin({
