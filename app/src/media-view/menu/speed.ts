@@ -1,14 +1,20 @@
 import type { MediaPlayerInstance } from "@vidstack/react";
 import type { MenuItem } from "obsidian";
+import type MxPlugin from "@/mx-main";
 import { PlaybackSpeedPrompt } from "./prompt";
 
-export const speedOptions = [0.25, 0.5, 0.75, 1, 1.25, 1.5, 2, 3, 5, 10];
-
-export function speedMenu(item: MenuItem, player: MediaPlayerInstance) {
+export function speedMenu(plugin: MxPlugin, item: MenuItem, player: MediaPlayerInstance) {
+  const speedOptions = plugin.settings.getState().speedOptions
   const currentSpeed = player.state.playbackRate;
 
   const isCustomSpeed = !speedOptions.includes(currentSpeed);
 
+  function speedLabel(speed: number) {
+    const speedLabel = new DocumentFragment();
+    speedLabel.appendText("Speed ");
+    speedLabel.createEl("code", { text: `(${speed}x)` });
+    return speedLabel;
+  }
   const sub = item
     .setTitle(speedLabel(currentSpeed))
     .setIcon("gauge")
@@ -24,6 +30,18 @@ export function speedMenu(item: MenuItem, player: MediaPlayerInstance) {
         }),
     ),
   );
+
+  function customSpeedLabel(speed: number) {
+    const customSpeedLabel = new DocumentFragment();
+    customSpeedLabel.appendText("Custom");
+    if (!speedOptions.includes(speed)) {
+      customSpeedLabel.appendText(" ");
+      customSpeedLabel.createEl("code", { text: `(${speed}x)` });
+    } else {
+      customSpeedLabel.appendText("...");
+    }
+    return customSpeedLabel;
+  }
   sub.addItem((item) =>
     item
       .setTitle(customSpeedLabel(currentSpeed))
@@ -34,23 +52,4 @@ export function speedMenu(item: MenuItem, player: MediaPlayerInstance) {
         player.playbackRate = newSpeed;
       }),
   );
-}
-
-function speedLabel(speed: number) {
-  const speedLabel = new DocumentFragment();
-  speedLabel.appendText("Speed ");
-  speedLabel.createEl("code", { text: `(${speed}x)` });
-  return speedLabel;
-}
-
-function customSpeedLabel(speed: number) {
-  const customSpeedLabel = new DocumentFragment();
-  customSpeedLabel.appendText("Custom");
-  if (!speedOptions.includes(speed)) {
-    customSpeedLabel.appendText(" ");
-    customSpeedLabel.createEl("code", { text: `(${speed}x)` });
-  } else {
-    customSpeedLabel.appendText("...");
-  }
-  return customSpeedLabel;
 }
