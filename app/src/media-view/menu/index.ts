@@ -84,7 +84,7 @@ export default function registerMediaMenu(this: MxPlugin) {
         );
       }
       if (source !== "sidebar-context-menu" && source !== "tab-header") {
-        menu.addItem((item) => speedMenu(item, ctx.player));
+        menu.addItem((item) => speedMenu(this, item, ctx.player));
         if (ctx.player.state.viewType === "video") {
           menu.addItem((item) => transformMenu(item, ctx));
           pipMenu(menu, ctx.player);
