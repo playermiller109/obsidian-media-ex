@@ -1,7 +1,6 @@
 import type { MediaPlayerInstance } from "@vidstack/react";
 import { Notice, debounce } from "obsidian";
 import { PlaybackSpeedPrompt } from "@/media-view/menu/prompt";
-import { speedOptions } from "@/media-view/menu/speed";
 import type MxPlugin from "@/mx-main";
 import { addMediaViewCommand, handleRepeatHotkey } from "./utils";
 
@@ -74,6 +73,7 @@ const createMediaCommands = (plugin: MxPlugin): Controls[] => [
   ...speed(plugin),
 ];
 function speed(plugin: MxPlugin): Controls[] {
+  const speedOptions = plugin.settings.getState().speedOptions
   // reuse notice if user is spamming speed change
   let notice: Notice | null = null;
   const hide = debounce(() => notice?.hide(), 2000, true);
