@@ -1,9 +1,9 @@
 const tempFragPattern = {
-  main: /^(?<start>[\w:.]*)(?:,(?<end>[\w:.]+))?$/,
+  main: /^(?<start>[\w,.]*)(?:,(?<end>[\w,.]+))?$/,
   npt_sec: /^\d+(?:\.\d+)?$/,
-  npt_mmss: /^(?<mm>[0-5]\d):(?<ss>[0-5]\d(?:\.\d+)?)$/,
-  npt_hhmmss: /^(?<hh>\d+):(?<mm>[0-5]\d):(?<ss>[0-5]\d(?:\.\d+)?)$/,
-  npt_time: /^(?:npt:)?([\d.:]+)$/,
+  npt_mmss: /^(?<mm>[0-5]\d)[,](?<ss>[0-5]\d(?:\.\d+)?)$/,
+  npt_hhmmss: /^(?<hh>\d+)[,](?<mm>[0-5]\d)[,](?<ss>[0-5]\d(?:\.\d+)?)$/,
+  npt_time: /^(?:npt:)?([\d,.]+)$/,
 };
 
 export const isTimestamp = ({ start, end }: TempFragment) =>

@@ -83,9 +83,9 @@ function durationToTempFrag(durationInSecond: number): string {
     seconds = duration.seconds() + duration.milliseconds() / 1e3;
 
   if (hours > 0) {
-    return [hours, ...[minutes, seconds].map((num) => fillZero(num))].join(":");
+    return [hours, ...[minutes, seconds].map((num) => fillZero(num))].join(",");
   } else if (minutes > 0) {
-    return [minutes, seconds].map((num) => fillZero(num)).join(":");
+    return [minutes, seconds].map((num) => fillZero(num)).join(",");
   } else if (seconds > 0) {
     return seconds.toFixed(2);
   } else {
