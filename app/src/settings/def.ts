@@ -21,6 +21,7 @@ type MxSettingValues = {
     click: OpenLinkBehavior;
     alt: OpenLinkBehavior;
   };
+  speedOptions: number[]
   speedStep: number;
   enableSubtitle: boolean;
   defaultLanguage?: string;
@@ -83,6 +84,7 @@ const mxSettingsDefault = {
   timestampOffset: 0,
   biliDefaultQuality: BilibiliQuality.FHD,
   screenshotFormat: "image/webp",
+  speedOptions: [0.25,0.5,0.8,1,1.2,1.5,2,2.5,3,3.5,4,6,8],
   speedStep: 0.1,
 } satisfies MxSettingValues;
 
@@ -121,6 +123,7 @@ export type MxSettings = {
   getDeviceName: (id?: string) => string | undefined;
   getDeviceNameWithDefault: (id?: string) => string;
   setDeviceName: (label: string, id?: string) => void;
+  setSpeedOptions: (speeds: string) => void
   setSpeedStep: (step: number) => void;
   setEnableSubtitle: (enable: boolean) => void;
   urlMapping: Map<string, string>;
@@ -170,14 +173,22 @@ export function createSettingsStore(plugin: MxPlugin) {
   }, 1e3);
   return createStore<MxSettings>((set, get) => ({
     ...omit(mxSettingsDefault, ["urlMappingData"]),
-    setEnableSubtitle(enable) {
-      set({ enableSubtitle: enable });
+    setSpeedOptions(speeds) {
+      const speedOptions = speeds
+        .split(",")
+        .map((s) => parseFloat(s.trim()))
+        .filter((n) => !isNaN(n) && n > 0);
+      set({ speedOptions });
       save(get());
     },
     setSpeedStep(step) {
       step = Math.abs(step);
       if (step === 0) return;
       set({ speedStep: step });
+      save(get());
+    },
+    setEnableSubtitle(enable) {
+      set({ enableSubtitle: enable });
       save(get());
     },
     setScreenshotFormat(format) {
