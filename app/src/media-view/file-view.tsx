@@ -3,6 +3,7 @@ import { EditableFileView, Scope } from "obsidian";
 import ReactDOM from "react-dom/client";
 import { createMediaViewStore, MediaViewContext } from "@/components/context";
 import { Player } from "@/components/player";
+import { SpeedBtns } from "@/components/speed-btns";
 import type { FileMediaInfo } from "@/info/media-info";
 import { checkMediaType } from "@/info/media-type";
 import type { PaneMenuSource } from "@/lib/menu";
@@ -18,14 +19,13 @@ abstract class MediaFileView
   implements PlayerComponent
 {
   allowNoFile = false;
-  // inherit from EditableFileView, no need to set explicitly
-  // navigation = true
-
   // no need to manage scope manually,
   // as it's implicitly called and handled by the WorkspaceLeaf
   store;
   scope: Scope;
   root: ReactDOM.Root | null = null;
+  // inherit from EditableFileView, no need to set explicitly
+  // navigation = true
   get player() {
     return this.store.getState().player;
   }
@@ -85,6 +85,7 @@ abstract class MediaFileView
         }}
       >
         <Player />
+        <SpeedBtns plugin={this.plugin} />
       </MediaViewContext.Provider>,
     );
   }
