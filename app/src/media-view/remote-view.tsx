@@ -9,6 +9,7 @@ import {
   onPlayerMounted,
 } from "@/components/context";
 import { Player } from "@/components/player";
+import { SpeedBtns } from "@/components/speed-btns";
 import { isFileMediaInfo } from "@/info/media-info";
 import { MediaURL } from "@/info/media-url";
 import type { PaneMenuSource } from "@/lib/menu";
@@ -34,7 +35,7 @@ export abstract class MediaRemoteView
   store;
   scope: Scope;
   root: ReactDOM.Root | null = null;
-  navigation = true;
+  navigation = false;
   get player() {
     return this.store.getState().player;
   }
@@ -172,6 +173,7 @@ export abstract class MediaRemoteView
         }}
       >
         <Player />
+        <SpeedBtns plugin={this.plugin} />
       </MediaViewContext.Provider>,
     );
   }
