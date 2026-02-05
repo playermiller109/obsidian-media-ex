@@ -22,6 +22,7 @@ export default function patchInlineUrl(this: MxPlugin) {
   const clickHandler = (e: MouseEvent) => {
     const target = e.target as HTMLElement;
     if (!target.instanceOf(HTMLElement)) return;
+    const linktext = target.textContent;
     if (
       target.matches(
         ".metadata-property .metadata-property-value .external-link"
@@ -31,7 +32,7 @@ export default function patchInlineUrl(this: MxPlugin) {
       if (!main) return;
       const key = main.dataset.propertyKey;
       if (!mediaSourceFields.includes(key as any)) return;
-      const urlInfo = this.resolveUrl(target.textContent);
+      const urlInfo = this.resolveUrl(linktext);
       if (!urlInfo) return;
       e.stopImmediatePropagation();
       this.leafOpener.openMedia(urlInfo, isModEvent(e), { fromUser: true });
@@ -40,6 +41,11 @@ export default function patchInlineUrl(this: MxPlugin) {
       const _ic = findLinkIcon(target.parentElement as Element);
       if (!_ic) return;
       e.stopImmediatePropagation();
+    }
+    else if (target.matches(".cm-url, .cm-url > .cm-underline")) {
+      if (!e.ctrlKey) return;
+      e.stopImmediatePropagation();
+      if (linktext) window.open(linktext);
     }
   };
   const unload = around(MarkdownView.prototype, {
