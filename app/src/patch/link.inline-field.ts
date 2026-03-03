@@ -37,6 +37,15 @@ export default function patchInlineUrl(this: MxPlugin) {
           return true;
         }
       },
+      {
+        selector: ".cm-url, .cm-url > .cm-underline",
+        fn: () => {
+          if (!e.ctrlKey) return;
+          e.stopImmediatePropagation();
+          if (linktext) window.open(linktext);
+          return true;
+        }
+      },
     ]
     .some(s => target.matches(s.selector) && s.fn());
   }
