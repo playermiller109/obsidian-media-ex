@@ -75,7 +75,7 @@ class UrlEmbedMarkdownRenderChild extends MediaRenderChild {
 
 function injectUrlMediaEmbed(this: MxPlugin) {
   // eslint-disable-next-line @typescript-eslint/no-this-alias
-  const plguin = this;
+  const plugin = this;
   this.registerMarkdownPostProcessor((el, ctx) => {
     for (const img of el.querySelectorAll("img")) {
       const info = extractSourceFromImg(img);
@@ -96,15 +96,15 @@ function injectUrlMediaEmbed(this: MxPlugin) {
     }
 
     function replace(embed: EmbedSource, target: HTMLElement) {
-      const src = plguin.resolveUrl(embed.url);
-      if (!src || isFileMediaInfo(src) || !shouldOpenMedia(src, plguin)) return;
+      const src = plugin.resolveUrl(embed.url);
+      if (!src || isFileMediaInfo(src) || !shouldOpenMedia(src, plugin)) return;
       const newWarpper = createDiv({
         cls: ["media-embed", "external-embed", "is-loaded"],
         attr: { src: src.href },
       });
       setSize(newWarpper, embed);
       target.replaceWith(newWarpper);
-      const child = new UrlEmbedMarkdownRenderChild(src, newWarpper, plguin);
+      const child = new UrlEmbedMarkdownRenderChild(src, newWarpper, plugin);
       ctx.addChild(child);
     }
   });
