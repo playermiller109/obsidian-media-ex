@@ -10,6 +10,14 @@ import type MediaExtended from "@/mx-main";
 import { isMdFavorInternalLink } from "./utils";
 import { InvalidNoticeWidget, WidgetCtorMap } from "./widget";
 
+function isExcluded(type: string): boolean {
+  const targets = [
+    "youtube",
+  ];
+
+  return targets.some(t => type.includes(t));
+}
+
 const getPlayerDecos = (
   plugin: MediaExtended,
   state: EditorState,
@@ -58,6 +66,9 @@ const getPlayerDecos = (
       const urlInfo = plugin.resolveUrl(url);
 
       if (!urlInfo) return;
+
+      if (isExcluded(urlInfo.type)) return;
+
       if (isFileMediaInfo(urlInfo)) {
         const link = plugin.app.metadataCache.fileToLinktext(urlInfo.file, "");
         addDeco(
