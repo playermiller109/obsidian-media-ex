@@ -78,7 +78,7 @@ const opts = {
   },
   entryPoints: ["src/mx-main.ts"],
   banner: { js: banner },
-  outfile: "dist/main.js",
+  outfile: "../main.js",
   tsconfig: "tsconfig.json",
   plugins: [
     stylePlugin({
