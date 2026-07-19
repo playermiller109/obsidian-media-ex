@@ -23,11 +23,11 @@ const obPlugin = (config = {}) => ({
       }
 
       // copy manifest.json to build dir
-      if (!beta) {
-        await copyFile("manifest.json", join(outDir, "manifest.json"));
-      } else {
-        await copyFile("manifest-beta.json", join(outDir, "manifest.json"));
-      }
+      // if (!beta) {
+      //   await copyFile("manifest.json", join(outDir, "manifest.json"));
+      // } else {
+      //   await copyFile("manifest-beta.json", join(outDir, "manifest.json"));
+      // }
 
       // create .hotreload if it doesn't exist
       if (hotreload) {

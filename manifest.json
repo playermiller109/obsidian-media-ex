@@ -1,0 +1,10 @@
+{
+  "id": "ex-media",
+  "name": "ex-media",
+  "version": "1.0.0",
+  "minAppVersion": "1.5.3",
+  "description": "",
+  "author": "AidenLx",
+  "authorUrl": "https://github.com/AidenLx",
+  "isDesktopOnly": true
+}
